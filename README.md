@@ -10,6 +10,13 @@ Install requirements first
 pip install -r requirements.txt
 ```
 
+## Known bug
+In Pytube there is currently a bug where some videos do not have a streams list, fix this by using the latest version:
+
+```bash
+python -m pip install git+https://github.com/nficano/pytube
+```
+
 You should download and unzip csv files with links to videos. You can download such files [here](https://deepmind.com/research/open-source/open-source-datasets/kinetics/).
 For example here is link to [kinetics-600 training.zip](https://deepmind.com/documents/193/kinetics_600_train%20(1).zip)
 
