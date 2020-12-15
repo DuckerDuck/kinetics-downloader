@@ -6,8 +6,13 @@ import subprocess
 from pandas.core.frame import DataFrame
 import numpy as np
 import pytube
+from pytube.exceptions import VideoPrivate
 from joblib import delayed
 from joblib import Parallel
+import logging
+
+logging.basicConfig(filename='failed.log', format='%(message)s')
+log = logging.getLogger(__name__)
 
 REQUIRED_COLUMNS = ['label', 'youtube_id', 'time_start', 'time_end', 'split', 'is_cc']
 TRIM_FORMAT = '%06d'
@@ -61,12 +66,17 @@ def download_clip(row, label_to_dir, trim, count):
             print('Finish downloading: ', filename)
         except KeyError:
             print('Unavailable video: ', filename)
+            log.warning(filename)
             return
-#         uncomment, if you want to skip any error:
-#
-#         except:
-#             print('Don\'t know why something went wrong(')
-#             return
+
+        except VideoPrivate:
+            print(f'Video made private: {filename}')
+            log.warning(filename)
+
+        except:
+            print('Don\'t know why something went wrong ')
+            log.warning(filename)
+            return
     else:
         print('Already downloaded: ', filename)
 
@@ -98,8 +108,10 @@ def download_clip(row, label_to_dir, trim, count):
                        )
             try:
                 subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
-            except subprocess.CalledProcessError:
+            except subprocess.CalledProcessError as e:
+                a = str(e)
                 print('Error while trimming: ', filename)
+                log.warning(filename)
                 return False
             print('Finish trimming: ', filename)
 
