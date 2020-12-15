@@ -3,6 +3,8 @@ import argparse
 import os
 import shutil
 import subprocess
+from pandas.core.frame import DataFrame
+import numpy as np
 import pytube
 from joblib import delayed
 from joblib import Parallel
@@ -104,13 +106,28 @@ def download_clip(row, label_to_dir, trim, count):
     print('Processed %i out of %i' % (count + 1, TOTAL_VIDEOS))
 
 
-def main(input_csv, output_dir, trim, num_jobs):
+def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, seed):
     global TOTAL_VIDEOS
 
     assert input_csv[-4:] == '.csv', 'Provided input is not a .csv file'
     links_df = pd.read_csv(input_csv)
     assert all(elem in REQUIRED_COLUMNS for elem in links_df.columns.values),\
         'Input csv doesn\'t contain required columns.'
+
+
+    np.random.seed(seed)
+
+    if videos_per_cat > 0:
+        new_links_df = []
+        unique_labels = sorted(list(set(links_df['label'])))
+        for label in unique_labels:
+            label_rows = links_df.loc[links_df['label'] == label]
+            subset_rows = label_rows.sample(n=videos_per_cat)
+            new_links_df.append(subset_rows)
+        
+        # Merge back into dataframe
+        links_df = pd.concat(new_links_df)
+
 
     # Creates folders where videos will be saved later
     # Also create 'tmp' directory for temporary files
@@ -119,6 +136,7 @@ def main(input_csv, output_dir, trim, num_jobs):
                                          folders_names=folders_names)
 
     TOTAL_VIDEOS = links_df.shape[0]
+    print(f'Total video count: {TOTAL_VIDEOS}')
     # Download files by links from dataframe
     Parallel(n_jobs=num_jobs)(delayed(download_clip)(
             row, label_to_dir, trim, count) for count, row in links_df.iterrows())
@@ -143,4 +161,6 @@ if __name__ == '__main__':
                         'Requires "ffmpeg" installed and added to environment PATH')
     p.add_argument('--num-jobs', type=int, default=1,
                    help='Number of parallel processes for downloading and trimming.')
+    p.add_argument('--videos-per-cat', type=int, default=-1, help='Number of videos to download for each category')
+    p.add_argument('--seed', type=int, default=42, help='Random seed for selecting videos (if not downloading all)')
     main(**vars(p.parse_args()))
