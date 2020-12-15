@@ -55,9 +55,9 @@ def download_clip(row, label_to_dir, trim, count):
     if not os.path.exists(os.path.join(output_path, filename + VIDEO_EXTENSION)):
         print('Start downloading: ', filename)
         try:
-            pytube.YouTube(URL_BASE + filename).\
-                streams.filter(subtype=VIDEO_FORMAT).first().\
-                download(output_path, filename)
+            video = pytube.YouTube(URL_BASE + filename)
+            stream = video.streams.filter(subtype=VIDEO_FORMAT)
+            stream.first().download(output_path, filename)
             print('Finish downloading: ', filename)
         except KeyError:
             print('Unavailable video: ', filename)
