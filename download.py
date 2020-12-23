@@ -118,7 +118,7 @@ def download_clip(row, label_to_dir, trim, count):
     print('Processed %i out of %i' % (count + 1, TOTAL_VIDEOS))
 
 
-def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, seed):
+def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, videos_per_cat_path, seed):
     global TOTAL_VIDEOS
 
     assert input_csv[-4:] == '.csv', 'Provided input is not a .csv file'
@@ -129,12 +129,23 @@ def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, seed):
 
     np.random.seed(seed)
 
-    if videos_per_cat > 0:
+    if videos_per_cat_path != '':
+        if not os.path.exists(videos_per_cat_path):
+            print(f'Could not find file: {videos_per_cat_path}')
+        
+        videos_per_cat = {}
+
+        with open(videos_per_cat_path, 'r') as f:
+            for line in f.readlines():
+                split_line = line.strip().split(':')
+                videos_per_cat[split_line[0]] = int(split_line[1])
+
         new_links_df = []
         unique_labels = sorted(list(set(links_df['label'])))
         for label in unique_labels:
             label_rows = links_df.loc[links_df['label'] == label]
-            subset_rows = label_rows.sample(n=videos_per_cat)
+            subset_rows = label_rows.sample(n=videos_per_cat[label])
+            print(f'Giving label {label} {videos_per_cat[label]} videos to download')
             new_links_df.append(subset_rows)
         
         # Merge back into dataframe
@@ -174,5 +185,6 @@ if __name__ == '__main__':
     p.add_argument('--num-jobs', type=int, default=1,
                    help='Number of parallel processes for downloading and trimming.')
     p.add_argument('--videos-per-cat', type=int, default=-1, help='Number of videos to download for each category')
+    p.add_argument('--videos-per-cat-path', type=str, default='', help='File containing the amount of videos to download for each category.')
     p.add_argument('--seed', type=int, default=42, help='Random seed for selecting videos (if not downloading all)')
     main(**vars(p.parse_args()))
