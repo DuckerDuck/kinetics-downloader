@@ -68,8 +68,10 @@ def distribute(args, write_to_file=True):
     # The fraction of the videos allocated to the top categories
     fractions = np.linspace(1, 0, args.splits)
     
-    dists = [{} for i in range(len(fractions))]
-    for i, frac in enumerate(fractions):
+    dists = [{} for i in range(len(fractions) + 1)]
+    # Skip last fraction (this sets the top categories to zero)
+    # instead I use a uniform distribution for the last split
+    for i, frac in enumerate(fractions[:-1]):
         lines = []
         
         videos_in_top = frac * args.total_videos
@@ -92,6 +94,18 @@ def distribute(args, write_to_file=True):
         if write_to_file:
             with open(f'video_per_cat_split_{i}', 'w') as f:
                 f.writelines(lines)
+
+    # Add uniform split at the end
+    videos_in_cat = int(args.total_videos / len(categories))
+    lines = []
+    for cat in categories:
+        dists[-1][cat.stem] = videos_in_cat
+        lines.append(f'{cat.stem}: {videos_in_cat}\n')
+
+    if write_to_file:
+        with open(f'video_per_cat_split_{i + 1}', 'w') as f:
+            f.writelines(lines)
+
     return dists
 
 def read_distribution_files(i, args):
@@ -104,9 +118,14 @@ def read_distribution_files(i, args):
 
 
 def plot_distributions_files(args):
-    plt.figure(figsize=(12, 8))
+    f = plt.figure(figsize=(12, 8))
     has_sort = None
     sort = None
+
+    axes = f.subplots(args.splits, 1, sharex=True)
+    if args.splits == 1:
+        axes = [axes]
+
     for s in range(args.splits):
         videos_per_cat = read_distribution_files(s, args)
         x = np.arange(len(videos_per_cat.keys()))
@@ -114,10 +133,13 @@ def plot_distributions_files(args):
 
         if not has_sort:
             sort = np.argsort(values)
-        plt.bar(x, values[sort])
 
-    plt.legend([f'split {i}' for i in range(args.splits)])
-    plt.savefig('all_distributions.png')
+        axes[s].set_title(f'split {s}')
+        axes[s].bar(x, values[sort], width=1.0)
+        axes[s].set_ylim([0, 100])
+        # plt.setp(axes[s].get_xticklabels(), ha="right", rotation=90)
+    plt.tight_layout()
+    f.savefig('all_distributions.png')
 
 
 def download_quota(args):
@@ -196,7 +218,7 @@ if __name__ == '__main__':
     parser.add_argument('method', type=str, default='stats', help='What utility method to run: [stats, distribute]')
     parser.add_argument('--dataset_dir', type=str, default='./output', help='Path to kinetics dataset folder')
     parser.add_argument('--splits', type=int, default=3, help='If redistributing data, the amount of splits between a uniform distribution and single category')
-    parser.add_argument('--top_categories', type=int, default=40, help='Number of categories most videos should belong to.')
+    parser.add_argument('--top_categories', type=int, default=50, help='Number of categories most videos should belong to.')
     parser.add_argument('--total_videos', type=int, default=4000, help='Amount of total videos to use') 
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
     parser.add_argument('--dataset_split_dir', type=str, default='split_dataset', help='Directory to store all dataset variants (where all symlinks will be created)')
