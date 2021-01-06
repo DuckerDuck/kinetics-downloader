@@ -144,7 +144,8 @@ def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, videos_per_cat_p
         unique_labels = sorted(list(set(links_df['label'])))
         for label in unique_labels:
             label_rows = links_df.loc[links_df['label'] == label]
-            subset_rows = label_rows.sample(n=videos_per_cat[label])
+            subset_rows = label_rows[:videos_per_cat[label]]
+            # subset_rows = label_rows.sample(n=videos_per_cat[label])
             print(f'Giving label {label} {videos_per_cat[label]} videos to download')
             new_links_df.append(subset_rows)
         

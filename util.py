@@ -146,7 +146,10 @@ def download_quota(args):
     """ If we want to distribute out dataset in multiple ways, we at least need to download
     the maximum amount of vidoes in each category for that category. This function calculates these maxes.
     """
-    dists = distribute(args, write_to_file=False)
+    if args.from_file:
+        dists = dists_from_file(args)
+    else:
+        dists = distribute(args, write_to_file=False)
 
     max_per_cat = defaultdict(int)
     for dist in dists:

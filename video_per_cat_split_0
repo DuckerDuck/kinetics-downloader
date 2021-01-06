@@ -1,43 +1,53 @@
-cartwheeling: 100
-ironing: 100
-planting trees: 100
-bending back: 100
-crawling baby: 100
-frying vegetables: 100
-jetskiing: 100
-writing: 100
-passing American football (in game): 100
-trapezing: 100
-hammer throw: 100
-headbanging: 100
-push up: 100
-blasting sand: 100
-cutting watermelon: 100
-hula hooping: 100
-playing bagpipes: 100
-drinking: 100
-driving tractor: 100
-cheerleading: 100
-peeling apples: 100
-making pizza: 100
-finger snapping: 100
-auctioning: 100
-swimming butterfly stroke: 100
-counting money: 100
-pumping fist: 100
-dribbling basketball: 100
-passing American football (not in game): 100
-singing: 100
-archery: 100
-washing hands: 100
-drinking shots: 100
-hopscotch: 100
-bandaging: 100
-massaging person's head: 100
-decorating the christmas tree: 100
-skipping rope: 100
-golf chipping: 100
-mowing lawn: 100
+cartwheeling: 80
+ironing: 80
+planting trees: 80
+bending back: 80
+crawling baby: 80
+frying vegetables: 80
+jetskiing: 80
+writing: 80
+passing American football (in game): 80
+trapezing: 80
+hammer throw: 80
+headbanging: 80
+push up: 80
+blasting sand: 80
+cutting watermelon: 80
+hula hooping: 80
+playing bagpipes: 80
+drinking: 80
+driving tractor: 80
+cheerleading: 80
+peeling apples: 80
+making pizza: 80
+finger snapping: 80
+auctioning: 80
+swimming butterfly stroke: 80
+counting money: 80
+pumping fist: 80
+dribbling basketball: 80
+passing American football (not in game): 80
+singing: 80
+archery: 80
+washing hands: 80
+drinking shots: 80
+hopscotch: 80
+bandaging: 80
+massaging person's head: 80
+decorating the christmas tree: 80
+skipping rope: 80
+golf chipping: 80
+mowing lawn: 80
+filling eyebrows: 80
+getting a tattoo: 80
+throwing discus: 80
+eating chips: 80
+setting table: 80
+washing hair: 80
+climbing a rope: 80
+waiting in line: 80
+cracking neck: 80
+petting cat: 80
 playing didgeridoo: 0
 sniffing: 0
 bending metal: 0
@@ -57,10 +67,8 @@ cleaning floor: 0
 playing flute: 0
 shooting basketball: 0
 surfing crowd: 0
-cracking neck: 0
 skateboarding: 0
 playing tennis: 0
-eating chips: 0
 riding a bike: 0
 plastering: 0
 checking tires: 0
@@ -88,7 +96,6 @@ opening present: 0
 pull ups: 0
 doing nails: 0
 feeding goats: 0
-getting a tattoo: 0
 eating burger: 0
 tobogganing: 0
 dancing gangnam style: 0
@@ -106,12 +113,10 @@ braiding hair: 0
 zumba: 0
 snorkeling: 0
 water sliding: 0
-throwing discus: 0
 tying bow tie: 0
 cutting pineapple: 0
 carrying baby: 0
 riding mule: 0
-setting table: 0
 catching or throwing frisbee: 0
 roller skating: 0
 applying cream: 0
@@ -167,7 +172,6 @@ diving cliff: 0
 brush painting: 0
 feeding birds: 0
 dunking basketball: 0
-climbing a rope: 0
 catching or throwing softball: 0
 baking cookies: 0
 eating cake: 0
@@ -191,7 +195,6 @@ flying kite: 0
 watering plants: 0
 tapping pen: 0
 folding paper: 0
-petting cat: 0
 blowing leaves: 0
 playing monopoly: 0
 shooting goal (soccer): 0
@@ -199,7 +202,6 @@ bouncing on trampoline: 0
 drumming fingers: 0
 mopping floor: 0
 digging: 0
-waiting in line: 0
 baby waking up: 0
 kicking field goal: 0
 hugging: 0
@@ -383,8 +385,6 @@ smoking: 0
 skydiving: 0
 using computer: 0
 sled dog racing: 0
-filling eyebrows: 0
-washing hair: 0
 taking a shower: 0
 welding: 0
 laughing: 0
