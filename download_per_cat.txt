@@ -1,0 +1,400 @@
+cartwheeling: 100
+ironing: 100
+planting trees: 100
+bending back: 100
+crawling baby: 100
+frying vegetables: 100
+jetskiing: 100
+writing: 100
+passing American football (in game): 100
+trapezing: 100
+hammer throw: 100
+headbanging: 100
+push up: 100
+blasting sand: 100
+cutting watermelon: 100
+hula hooping: 100
+playing bagpipes: 100
+drinking: 100
+driving tractor: 100
+cheerleading: 100
+peeling apples: 100
+making pizza: 100
+finger snapping: 100
+auctioning: 100
+swimming butterfly stroke: 100
+counting money: 100
+pumping fist: 100
+dribbling basketball: 100
+passing American football (not in game): 100
+singing: 100
+archery: 100
+washing hands: 100
+drinking shots: 100
+hopscotch: 100
+bandaging: 100
+massaging person's head: 100
+decorating the christmas tree: 100
+skipping rope: 100
+golf chipping: 100
+mowing lawn: 100
+playing didgeridoo: 11
+sniffing: 11
+bending metal: 11
+weaving basket: 11
+squat: 11
+shot put: 11
+sharpening pencil: 11
+massaging feet: 11
+sailing: 11
+spray painting: 11
+cleaning toilet: 11
+shredding paper: 11
+punching bag: 11
+cooking egg: 11
+playing controller: 11
+cleaning floor: 11
+playing flute: 11
+shooting basketball: 11
+surfing crowd: 11
+cracking neck: 11
+skateboarding: 11
+playing tennis: 11
+eating chips: 11
+riding a bike: 11
+plastering: 11
+checking tires: 11
+massaging back: 11
+testifying: 11
+news anchoring: 11
+opening bottle: 11
+riding or walking with horse: 11
+pumping gas: 11
+long jump: 11
+yoga: 11
+cleaning pool: 11
+playing volleyball: 11
+ice fishing: 11
+drawing: 11
+eating hotdog: 11
+situp: 11
+playing xylophone: 11
+throwing ball: 11
+barbequing: 11
+running on treadmill: 11
+ice climbing: 11
+milking cow: 11
+opening present: 11
+pull ups: 11
+doing nails: 11
+feeding goats: 11
+getting a tattoo: 11
+eating burger: 11
+tobogganing: 11
+dancing gangnam style: 11
+gargling: 11
+using segway: 11
+eating carrots: 11
+kicking soccer ball: 11
+bowling: 11
+arm wrestling: 11
+bungee jumping: 11
+assembling computer: 11
+snowboarding: 11
+arranging flowers: 11
+braiding hair: 11
+zumba: 11
+snorkeling: 11
+water sliding: 11
+throwing discus: 11
+tying bow tie: 11
+cutting pineapple: 11
+carrying baby: 11
+riding mule: 11
+setting table: 11
+catching or throwing frisbee: 11
+roller skating: 11
+applying cream: 11
+reading newspaper: 11
+front raises: 11
+fixing hair: 11
+golf driving: 11
+making bed: 11
+riding unicycle: 11
+answering questions: 11
+punching person (boxing): 11
+changing wheel: 11
+pushing wheelchair: 11
+triple jump: 11
+applauding: 11
+grinding meat: 11
+shaving legs: 11
+exercising with an exercise ball: 11
+belly dancing: 11
+playing trombone: 11
+wrapping present: 11
+cooking chicken: 11
+vault: 11
+swimming breast stroke: 11
+making a sandwich: 11
+playing guitar: 11
+climbing tree: 11
+cutting nails: 11
+holding snake: 11
+feeding fish: 11
+playing ice hockey: 11
+somersaulting: 11
+stomping grapes: 11
+balloon blowing: 11
+playing harp: 11
+parasailing: 11
+playing cello: 11
+paragliding: 11
+juggling fire: 11
+playing cymbals: 11
+kitesurfing: 11
+riding mountain bike: 11
+tossing salad: 11
+cooking on campfire: 11
+surfing water: 11
+headbutting: 11
+playing drums: 11
+golf putting: 11
+doing laundry: 11
+unloading truck: 11
+snowkiting: 11
+diving cliff: 11
+brush painting: 11
+feeding birds: 11
+dunking basketball: 11
+climbing a rope: 11
+catching or throwing softball: 11
+baking cookies: 11
+eating cake: 11
+egg hunting: 11
+playing clarinet: 11
+hockey stop: 11
+busking: 11
+hitting baseball: 11
+washing feet: 11
+slapping: 11
+air drumming: 11
+dying hair: 11
+blowing out candles: 11
+eating spaghetti: 11
+playing keyboard: 11
+rock climbing: 11
+stretching leg: 11
+playing badminton: 11
+swinging on something: 11
+flying kite: 11
+watering plants: 11
+tapping pen: 11
+folding paper: 11
+petting cat: 11
+blowing leaves: 11
+playing monopoly: 11
+shooting goal (soccer): 11
+bouncing on trampoline: 11
+drumming fingers: 11
+mopping floor: 11
+digging: 11
+waiting in line: 11
+baby waking up: 11
+kicking field goal: 11
+hugging: 11
+tai chi: 11
+drinking beer: 11
+sanding floor: 11
+cooking sausages: 11
+snowmobiling: 11
+eating doughnuts: 11
+building cabinet: 11
+marching: 11
+ice skating: 11
+pushing car: 11
+dancing charleston: 11
+curling hair: 11
+playing cricket: 11
+tapping guitar: 11
+deadlifting: 11
+getting a haircut: 11
+clay pottery making: 11
+sweeping floor: 11
+walking the dog: 11
+bee keeping: 11
+bobsledding: 11
+grooming horse: 11
+exercising arm: 11
+tasting beer: 11
+tap dancing: 11
+tango dancing: 11
+cleaning gutters: 11
+laying bricks: 11
+playing basketball: 11
+cleaning shoes: 11
+brushing teeth: 11
+wrestling: 11
+biking through snow: 11
+presenting weather forecast: 11
+hoverboarding: 11
+ripping paper: 11
+changing oil: 11
+shearing sheep: 11
+beatboxing: 11
+hurdling: 11
+eating ice cream: 11
+trimming or shaving beard: 11
+chopping wood: 11
+waxing chest: 11
+bartending: 11
+folding clothes: 11
+crying: 11
+spinning poi: 11
+dodgeball: 11
+motorcycling: 11
+jumping into pool: 11
+javelin throw: 11
+texting: 11
+brushing hair: 11
+juggling balls: 11
+skiing slalom: 11
+riding elephant: 11
+doing aerobics: 11
+canoeing or kayaking: 11
+playing violin: 11
+high jump: 11
+massaging legs: 11
+kissing: 11
+training dog: 11
+lunge: 11
+hurling (sport): 11
+grooming dog: 11
+clean and jerk: 11
+whistling: 11
+unboxing: 11
+making tea: 11
+playing cards: 11
+eating watermelon: 11
+trimming trees: 11
+knitting: 11
+climbing ladder: 11
+celebrating: 11
+swinging legs: 11
+folding napkins: 11
+stretching arm: 11
+disc golfing: 11
+waxing eyebrows: 11
+carving pumpkin: 11
+jumpstyle dancing: 11
+extinguishing fire: 11
+picking fruit: 11
+catching or throwing baseball: 11
+playing bass guitar: 11
+making jewelry: 11
+crossing river: 11
+playing squash or racquetball: 11
+blowing nose: 11
+making a cake: 11
+jogging: 11
+parkour: 11
+skiing crosscountry: 11
+tickling: 11
+playing harmonica: 11
+swimming backstroke: 11
+drop kicking: 11
+recording music: 11
+playing trumpet: 11
+pushing cart: 11
+side kick: 11
+robot dancing: 11
+cleaning windows: 11
+catching fish: 11
+tying tie: 11
+washing dishes: 11
+dancing ballet: 11
+clapping: 11
+sword fighting: 11
+springboard diving: 11
+country line dancing: 11
+playing accordion: 11
+tasting food: 11
+scuba diving: 11
+strumming guitar: 11
+juggling soccer ball: 11
+shoveling snow: 11
+throwing axe: 11
+contact juggling: 11
+dining: 11
+waxing legs: 11
+riding scooter: 11
+slacklining: 11
+playing organ: 11
+bench pressing: 11
+reading book: 11
+bookbinding: 11
+playing ukulele: 11
+snatch weight lifting: 11
+playing recorder: 11
+breading or breadcrumbing: 11
+playing poker: 11
+making snowman: 11
+spraying: 11
+abseiling: 11
+moving furniture: 11
+capoeira: 11
+swing dancing: 11
+giving or receiving award: 11
+shaving head: 11
+sticking tongue out: 11
+waxing back: 11
+riding mechanical bull: 11
+smoking hookah: 11
+building shed: 11
+driving car: 11
+windsurfing: 11
+skiing (not slalom or crosscountry): 11
+playing saxophone: 11
+peeling potatoes: 11
+tossing coin: 11
+playing chess: 11
+blowing glass: 11
+faceplanting: 11
+gymnastics tumbling: 11
+high kick: 11
+riding camel: 11
+making sushi: 11
+sneezing: 11
+sign language interpreting: 11
+ski jumping: 11
+petting animal (not cat): 11
+shaking hands: 11
+flipping pancake: 11
+rock scissors paper: 11
+playing paintball: 11
+yawning: 11
+shining shoes: 11
+sharpening knives: 11
+water skiing: 11
+garbage collecting: 11
+breakdancing: 11
+salsa dancing: 11
+smoking: 11
+skydiving: 11
+using computer: 11
+sled dog racing: 11
+filling eyebrows: 11
+washing hair: 11
+taking a shower: 11
+welding: 11
+laughing: 11
+dancing macarena: 11
+using remote controller (not gaming): 11
+tying knot (not on a tie): 11
+scrambling eggs: 11
+shuffling cards: 11
+shaking head: 11
+playing piano: 11
+playing kickball: 11
+krumping: 11
+pole vault: 11
