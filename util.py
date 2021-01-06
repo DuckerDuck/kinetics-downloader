@@ -110,9 +110,11 @@ def plot_distributions_files(args):
     for s in range(args.splits):
         videos_per_cat = read_distribution_files(s, args)
         x = np.arange(len(videos_per_cat.keys()))
+        values = np.array(list(videos_per_cat.values()))
+
         if not has_sort:
-            sort = np.argsort(videos_per_cat)
-        plt.bar(x, videos_per_cat.values()[sort])
+            sort = np.argsort(values)
+        plt.bar(x, values[sort])
 
     plt.legend([f'split {i}' for i in range(args.splits)])
     plt.savefig('all_distributions.png')
