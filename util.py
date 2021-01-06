@@ -41,7 +41,7 @@ def stats(args, plot=True):
         # Plot distribution of videos per category
         plt.figure(figsize=(12, 8))
         x = np.arange(len(categories))
-        plt.bar(x, total_videos.values())
+        plt.bar(x, sorted(total_videos.values()))
         plt.savefig('distribution.png')
 
     return categories, total_videos
@@ -94,6 +94,27 @@ def distribute(args, write_to_file=True):
                 f.writelines(lines)
     return dists
 
+def read_distribution_files(i, args):
+    videos_per_cat = {}
+    with open(f'video_per_cat_split_{i}', 'r') as f:
+        for line in f.readlines():
+            split_line = line.strip().split(':')
+            videos_per_cat[split_line[0]] = int(split_line[1])
+    return videos_per_cat
+
+
+def plot_distributions_files(args):
+    plt.figure(figsize=(12, 8))
+
+    for s in range(args.splits):
+        videos_per_cat = read_distribution_files(s, args)
+        x = np.arange(len(videos_per_cat.keys()))
+        plt.bar(x, sorted(videos_per_cat.values()))
+
+    plt.legend([f'split {i}' for i in range(args.splits)])
+    plt.savefig('all_distributions.png')
+
+
 def download_quota(args):
     """ If we want to distribute out dataset in multiple ways, we at least need to download
     the maximum amount of vidoes in each category for that category. This function calculates these maxes.
@@ -114,6 +135,13 @@ def download_quota(args):
     print(f'Total number of videos required to download: {total}')
 
 
+def dists_from_file(args):
+    dists = []
+    for i in range(args.splits):
+        videos_per_cat = read_distribution_files(i, args)
+        dists.append(videos_per_cat)
+    return dists
+
 
 def create_linked_dataset(args):
     dataset = Path(args.dataset_dir)
@@ -121,8 +149,11 @@ def create_linked_dataset(args):
     if not dataset.is_dir():
         print('Dataset directory not found')
         return
-
-    dists = distribute(args, write_to_file = False)
+    
+    if args.from_file:
+        dists = dists_from_file(args)
+    else:
+        dists = distribute(args, write_to_file = False)
 
     parent_target = Path(args.dataset_split_dir)
 
@@ -164,6 +195,7 @@ if __name__ == '__main__':
     parser.add_argument('--total_videos', type=int, default=4000, help='Amount of total videos to use') 
     parser.add_argument('--seed', type=int, default=42, help='Random seed')
     parser.add_argument('--dataset_split_dir', type=str, default='split_dataset', help='Directory to store all dataset variants (where all symlinks will be created)')
+    parser.add_argument('--from_file', type=bool, default=True, help='Read distribution from files')
     args = parser.parse_args()
 
     if args.method == 'stats':
@@ -174,5 +206,7 @@ if __name__ == '__main__':
         download_quota(args)
     elif args.method == 'symlink':
         create_linked_dataset(args)
+    elif args.method == 'plot':
+        plot_distributions_files(args)
     else:
         print('Unkown method argument')
