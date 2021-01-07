@@ -46,8 +46,28 @@ def stats(args, plot=True):
 
     return categories, total_videos
 
+def distribute(bins, amount):
+    """Distribute amount over each bin, even if amount is not perfectly divisible 
+    by the number of bins. This does not work if the remainder is larger than the 
+    amount of bins"""
+    bins = sorted(bins)
+    minimal = int(amount / len(bins))
+    missing = amount - minimal * len(bins)
+    dist = {}
 
-def distribute(args, write_to_file=True):
+    for b in bins:
+        dist[b] = minimal
+        if missing > 0:
+            dist[b] += 1
+            missing -= 1
+
+    if missing != 0:
+        print(f'Warning! Could not fully distribute over bins: {missing} remaining')
+
+    return dist
+
+
+def distribute_files(args, write_to_file=True):
     """Distributes args.total_videos over all categories. Will output args.splits number
        of distributions where there is a trade-off between the amount of videos in 
        args.top_categories and the rest"""
@@ -73,24 +93,19 @@ def distribute(args, write_to_file=True):
     # instead I use a uniform distribution for the last split
     for i, frac in enumerate(fractions[:-1]):
         lines = []
-        
-        videos_in_top = frac * args.total_videos
-        for cat in top_categories:
-            videos_in_cat = videos_in_top / args.top_categories
-            videos_in_cat = int(videos_in_cat)
-            dists[i][cat.stem] = videos_in_cat
-            lines.append(f'{cat.stem}: {videos_in_cat}\n')
 
-        videos_not_in_top = (1 - frac) * args.total_videos
-        for cat in categories:
-            if cat in top_categories:
-                continue
+        videos_in_top = frac * args.total_videos 
+        videos_per_cat = distribute(top_categories, videos_in_top)
+        dists[i] = videos_per_cat
+        lines += [f'{cat.stem}: {amount}\n' for cat, amount in videos_per_cat.items()]
 
-            videos_in_cat = videos_not_in_top / (len(categories) - args.top_categories)
-            videos_in_cat = int(videos_in_cat)
-            dists[i][cat.stem] = videos_in_cat
-            lines.append(f'{cat.stem}: {videos_in_cat}\n')
+        videos_not_in_top = args.total_videos - videos_in_top
 
+        non_top_categories = [cat for cat in categories if cat not in top_categories]
+        videos_per_cat = distribute(non_top_categories, videos_not_in_top)
+        dists[i] = videos_per_cat
+        lines += [f'{cat.stem}: {amount}\n' for cat, amount in videos_per_cat.items()]
+ 
         if write_to_file:
             with open(f'video_per_cat_split_{i}', 'w') as f:
                 f.writelines(lines)
@@ -149,7 +164,7 @@ def download_quota(args):
     if args.from_file:
         dists = dists_from_file(args)
     else:
-        dists = distribute(args, write_to_file=False)
+        dists = distribute_files(args, write_to_file=False)
 
     max_per_cat = defaultdict(int)
     for dist in dists:
@@ -183,7 +198,7 @@ def create_linked_dataset(args):
     if args.from_file:
         dists = dists_from_file(args)
     else:
-        dists = distribute(args, write_to_file = False)
+        dists = distribute_files(args, write_to_file = False)
 
     parent_target = Path(args.dataset_split_dir)
 
@@ -231,7 +246,7 @@ if __name__ == '__main__':
     if args.method == 'stats':
         stats(args)
     elif args.method == 'distribute':
-        distribute(args)
+        distribute_files(args)
     elif args.method == 'download_quota':
         download_quota(args)
     elif args.method == 'symlink':
