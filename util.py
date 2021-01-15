@@ -128,18 +128,18 @@ def increasing_distribution(args, write_to_file=True):
     """Create distributions with increasing amount of videos,
     split uniformly over categories"""
 
-    video_amounts = np.linspace(0, 1, args.splits) * args.total_videos
+    video_amounts = np.linspace(0.001, 1, args.splits) * args.total_videos
 
     categories, _ = stats(args, plot=False)
     dists = []
-    for amount in video_amounts:
+    for i, amount in enumerate(video_amounts):
         dist = distribute(categories, int(amount))
         video_count = sum([amount for amount in dist.values()])
-        print(video_count, amount)
+        print(f'Split {i} has {video_count} videos.')
         dists.append(dist)
 
     if write_to_file:
-        write_distribution(dists, 'increasing_split_')
+        write_distribution(dists)
 
     return dists
 
