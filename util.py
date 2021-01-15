@@ -123,6 +123,23 @@ def distribute_files(args, write_to_file=True):
 
     return dists
 
+
+def increasing_distribution(args):
+    """Create distributions with increasing amount of videos, 
+    split uniformly over categories"""
+
+    video_amounts = np.linspace(1, 0, args.splits) * args.total_videos
+
+    categories, _ = stats(args, plot=False)
+    dists = []
+    for amount in video_amounts:
+        videos_per_cat = amount / len(categories)
+        dist = distribute(categories, int(videos_per_cat))
+        dists.append(dist)
+
+    return dists
+
+
 def read_distribution_files(i, args):
     videos_per_cat = {}
     with open(f'video_per_cat_split_{i}', 'r') as f:
@@ -159,7 +176,7 @@ def plot_distributions_files(args):
 
 def download_quota(args):
     """ If we want to distribute out dataset in multiple ways, we at least need to download
-    the maximum amount of vidoes in each category for that category. This function calculates these maxes.
+    the maximum amount of videos in each category for that category. This function calculates these maxes.
     """
     if args.from_file:
         dists = dists_from_file(args)
@@ -254,4 +271,4 @@ if __name__ == '__main__':
     elif args.method == 'plot':
         plot_distributions_files(args)
     else:
-        print('Unkown method argument')
+        print('Unknown method argument')
