@@ -124,20 +124,30 @@ def distribute_files(args, write_to_file=True):
     return dists
 
 
-def increasing_distribution(args):
-    """Create distributions with increasing amount of videos, 
+def increasing_distribution(args, write_to_file=True):
+    """Create distributions with increasing amount of videos,
     split uniformly over categories"""
 
-    video_amounts = np.linspace(1, 0, args.splits) * args.total_videos
+    video_amounts = np.linspace(0, 1, args.splits) * args.total_videos
 
     categories, _ = stats(args, plot=False)
     dists = []
     for amount in video_amounts:
-        videos_per_cat = amount / len(categories)
-        dist = distribute(categories, int(videos_per_cat))
+        dist = distribute(categories, int(amount))
+        video_count = sum([amount for amount in dist.values()])
+        print(video_count, amount)
         dists.append(dist)
 
+    if write_to_file:
+        write_distribution(dists, 'increasing_split_')
+
     return dists
+
+def write_distribution(dists, prefix='video_per_cat_split_'):
+    for i, dist in enumerate(dists):
+        lines = [f'{cat.stem}: {amount}\n' for cat, amount in dist.items()]
+        with open(prefix + str(i), 'w') as f:
+            f.writelines(lines)
 
 
 def read_distribution_files(i, args):
@@ -270,5 +280,7 @@ if __name__ == '__main__':
         create_linked_dataset(args)
     elif args.method == 'plot':
         plot_distributions_files(args)
+    elif args.method == 'increase':
+        increasing_distribution(args)
     else:
         print('Unknown method argument')
