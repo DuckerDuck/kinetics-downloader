@@ -5,8 +5,8 @@ import shutil
 import subprocess
 from pandas.core.frame import DataFrame
 import numpy as np
-import pytube
-from pytube.exceptions import VideoPrivate
+import youtube_dl
+from youtube_dl.utils import YoutubeDLError
 from joblib import delayed
 from joblib import Parallel
 import logging
@@ -56,27 +56,25 @@ def download_clip(row, label_to_dir, trim, count):
     # if trim, save full video to tmp folder
     output_path = label_to_dir['tmp'] if trim else label_to_dir[label]
 
-    # don't download if already exists
+    ydl_opts = {
+        'format': 'bestvideo[ext=mp4][filesize <? 50M]',
+    }
+
+
+    # Don't download if already exists
     if not os.path.exists(os.path.join(output_path, filename + VIDEO_EXTENSION)):
-        print('Start downloading: ', filename)
+        print('Start downloading: ', filename)  
+        ydl_opts['outtmpl'] = os.path.join(output_path, '%(id)s.%(ext)s')
+        
         try:
-            video = pytube.YouTube(URL_BASE + filename)
-            stream = video.streams.filter(subtype=VIDEO_FORMAT)
-            stream.first().download(output_path, filename)
-            print('Finish downloading: ', filename)
-        except KeyError:
-            print('Unavailable video: ', filename)
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([URL_BASE + filename])
+        except YoutubeDLError as e:
+            print('Download failed for ' + filename)
             log.warning(filename)
-            return
+            return False
 
-        except VideoPrivate:
-            print(f'Video made private: {filename}')
-            log.warning(filename)
-
-        except:
-            print('Don\'t know why something went wrong ')
-            log.warning(filename)
-            return
+        print('Finish downloading: ', filename)
     else:
         print('Already downloaded: ', filename)
 
@@ -99,7 +97,7 @@ def download_clip(row, label_to_dir, trim, count):
             command = 'ffmpeg -i "{input_filename}" ' \
                       '-ss {time_start} ' \
                       '-t {time_end} ' \
-                      '-c:v libx264 -c:a copy -threads 1 ' \
+                      '-c:v libx264 -c:a copy -threads 1 -y -nostdin ' \
                       '"{output_filename}"'.format(
                            input_filename=input_filename,
                            time_start=start,
@@ -109,7 +107,6 @@ def download_clip(row, label_to_dir, trim, count):
             try:
                 subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
             except subprocess.CalledProcessError as e:
-                a = str(e)
                 print('Error while trimming: ', filename)
                 log.warning(filename)
                 return False
@@ -166,7 +163,7 @@ def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, videos_per_cat_p
             row, label_to_dir, trim, count) for count, row in links_df.iterrows())
 
     # Clean tmp directory
-    shutil.rmtree(label_to_dir['tmp'])
+    # shutil.rmtree(label_to_dir['tmp'])
 
 
 if __name__ == '__main__':
