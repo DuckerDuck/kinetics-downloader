@@ -59,10 +59,19 @@ def download_clip(row, label_to_dir, trim, trimmed_label_to_dir, count):
     ydl_opts = {
         'format': 'bestvideo[ext=mp4][filesize <? 50M]',
     }
+    
+    # Don't download if the video has already been trimmed
+    has_trim = False
+    if trim:
+        start = str(time_start)
+        end = str(time_end - time_start)
+        output_filename = os.path.join(trimmed_label_to_dir[label],
+                                       filename + '_{}_{}'.format(start, end) + VIDEO_EXTENSION)
 
+        has_trim = os.path.exists(output_filename)
 
     # Don't download if already exists
-    if not os.path.exists(os.path.join(output_path, filename + VIDEO_EXTENSION)):
+    if not os.path.exists(os.path.join(output_path, filename + VIDEO_EXTENSION)) and not has_trim:
         print('Start downloading: ', filename)  
         ydl_opts['outtmpl'] = os.path.join(output_path, '%(id)s.%(ext)s')
         
@@ -82,14 +91,10 @@ def download_clip(row, label_to_dir, trim, trimmed_label_to_dir, count):
         # Take video from tmp folder and put trimmed to final destination folder
         # better write full path to video
 
-        start = str(time_start)
-        end = str(time_end - time_start)
 
         input_filename = os.path.join(output_path, filename + VIDEO_EXTENSION)
-        output_filename = os.path.join(trimmed_label_to_dir[label],
-                                       filename + '_{}_{}'.format(start, end) + VIDEO_EXTENSION)
 
-        if os.path.exists(output_filename):
+        if has_trim:
             print('Already trimmed: ', filename)
         else:
             print('Start trimming: ', filename)
