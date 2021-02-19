@@ -40,7 +40,7 @@ def create_file_structure(path, folders_names):
     return mapping
 
 
-def download_clip(row, label_to_dir, trim, count):
+def download_clip(row, label_to_dir, trim, trimmed_label_to_dir, count):
     """
     Download clip from youtube.
     row: dict-like objects with keys: ['label', 'youtube_id', 'time_start', 'time_end']
@@ -86,7 +86,7 @@ def download_clip(row, label_to_dir, trim, count):
         end = str(time_end - time_start)
 
         input_filename = os.path.join(output_path, filename + VIDEO_EXTENSION)
-        output_filename = os.path.join(label_to_dir[label],
+        output_filename = os.path.join(trimmed_label_to_dir[label],
                                        filename + '_{}_{}'.format(start, end) + VIDEO_EXTENSION)
 
         if os.path.exists(output_filename):
@@ -115,7 +115,7 @@ def download_clip(row, label_to_dir, trim, count):
     print('Processed %i out of %i' % (count + 1, TOTAL_VIDEOS))
 
 
-def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, videos_per_cat_path, seed):
+def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, videos_per_cat_path, seed, trim_dir):
     global TOTAL_VIDEOS
 
     assert input_csv[-4:] == '.csv', 'Provided input is not a .csv file'
@@ -156,11 +156,16 @@ def main(input_csv, output_dir, trim, num_jobs, videos_per_cat, videos_per_cat_p
     label_to_dir = create_file_structure(path=output_dir,
                                          folders_names=folders_names)
 
+    if trim_dir is not None:
+        trimmed_label_to_dir = create_file_structure(path=trim_dir, folders_names=folders_names)
+    else:
+        trimmed_label_to_dir = label_to_dir
+
     TOTAL_VIDEOS = links_df.shape[0]
     print(f'Total video count: {TOTAL_VIDEOS}')
     # Download files by links from dataframe
     Parallel(n_jobs=num_jobs)(delayed(download_clip)(
-            row, label_to_dir, trim, count) for count, row in links_df.iterrows())
+            row, label_to_dir, trim, trimmed_label_to_dir, count) for count, row in links_df.iterrows())
 
     # Clean tmp directory
     # shutil.rmtree(label_to_dir['tmp'])
@@ -173,7 +178,12 @@ if __name__ == '__main__':
     p.add_argument('input_csv', type=str,
                    help=('Path to csv file, containing links to youtube videos.\n'
                          'Should contain following columns:\n'
-                         'label, youtube_id, time_start, time_end, split, is_cc'))
+                         'label, youtube_id, time_start, time_end, split, is_cc'))    
+
+    p.add_argument('--trim_dir', type=str,
+                   help='Output directory where trimmed videos will be saved.\n'
+                        'It will be created if doesn\'t exist')
+ 
     p.add_argument('output_dir', type=str,
                    help='Output directory where videos will be saved.\n'
                         'It will be created if doesn\'t exist')

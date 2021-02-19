@@ -4,5 +4,6 @@ python download.py \
     ../kinetics400/train.csv \
     ./output/ \
     --trim \
-    --videos-per-cat-path download_per_cat.txt \
-    --num-jobs 1
+    --trim_dir trim_output \
+    --videos-per-cat-path test_videos \
+    --num-jobs 4
